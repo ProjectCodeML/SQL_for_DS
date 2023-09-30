@@ -226,8 +226,8 @@ desc customer;
 
 select *
 from customer as c1
-join customer as c2
-on c1.first_name = c2.last_name;
+         join customer as c2
+              on c1.first_name = c2.last_name;
 
 # exercise 05
 
@@ -240,3 +240,25 @@ on c1.first_name = c2.last_name;
 
 # write a query that returns all addresses that are in the same city.
 # Hint: (you need to join address table itself - `self-join`)
+select *
+from (select a.address, c.city
+      from address as a
+               join city as c
+                    on a.city_id = c.city_id) as c1
+         join (select a.address, c.city
+               from address as a
+                        join city as c
+                             on a.city_id = c.city_id) as c2
+              on c1.city = c2.city;
+
+select *
+from address as a1
+         join address as a2
+              on a1.city_id = a2.city_id;
+
+# for see addresses are different in same city
+select *
+from address as a1
+         join address as a2
+              on (a1.city_id = a2.city_id)
+                  and (a1.address <> a2.address);
