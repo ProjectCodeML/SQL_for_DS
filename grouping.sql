@@ -50,8 +50,8 @@ group by customer_id, staff_id;
 # language and group them according to category of each
 select f.language_id, fc.category_id, count(*) as `film_count`
 from film as f
-join film_category as fc
-on f.film_id = fc.film_id
+         join film_category as fc
+              on f.film_id = fc.film_id
 group by f.language_id, fc.category_id;
 
 # practice 01
@@ -64,8 +64,31 @@ group by f.language_id, fc.category_id;
 # by a each actor in each film rating
 
 # ex 03-
+# find average rental rate renting movies
+# according to their film category
+
+# ex 03.1-
 # find average rental rate and total amount earn by
 # renting movies according to their film category
+select c.name,
+       avg(dtl.rental_rate) as "avg rental rate",
+       sum(p.amount) as "total earnings"
+from (select f.film_id,
+             f.rental_rate,
+             fc.category_id,
+             r.rental_id
+      from film as f
+               join film_category as fc
+                    on f.film_id = fc.film_id
+               join inventory as i
+                    on f.film_id = i.film_id
+               join rental as r
+                    on i.inventory_id = r.inventory_id) as dtl
+         join payment as p
+              on p.rental_id = dtl.rental_id
+         join category as c
+              on dtl.category_id = c.category_id
+group by 1;
 
 # ex 04-
 # show me average rental rate of films has deleted
