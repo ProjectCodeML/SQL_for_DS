@@ -12,12 +12,11 @@ select <column_names> as <new_col_name> or <*> # specify what are the columns
 from < table_name >                  # where you want above column/s from
     join <how_to_combine_the_tables> # combine multiple tables
 on <column_tb_1> == <column_tb_2>
-group by <column_1, column_2>
 having < condition > # condition for apply to groups
 where < condition > # filter for normal data (when there is no grouping)
-order by < column_name > < asc /
-desc >
-    limit <n>;
+group by <column_1, column_2>
+order by < column_name > < asc /desc >
+limit <n>;
 
 # how to get specific column from a table
 select first_name
